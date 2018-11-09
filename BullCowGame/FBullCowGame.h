@@ -12,6 +12,7 @@ public:
 
 	void Reset();
 	bool CheckGuessValidity(std::string);
+	// Provide a method for counting Bulls and Cows en incrementing try number.
 
 private:
 	//See constructor for initialization.
