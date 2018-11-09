@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "FBullCowGame.h"
 
+using int32 = int;
+
 FBullCowGame::FBullCowGame()
 {
 	Reset();
@@ -15,13 +17,13 @@ void FBullCowGame::Reset()
 	MyCurrentTry = MY_CURRENT_TRY;
 }
 	
-int FBullCowGame::GetMaxTries() const
+int32 FBullCowGame::GetMaxTries() const
 {
 
 	return MyMaxTries;
 }
 
-int FBullCowGame::GetCurrentTry() const
+int32 FBullCowGame::GetCurrentTry() const
 {
 	return MyCurrentTry;
 }
@@ -32,7 +34,7 @@ bool FBullCowGame::IsGameWon() const
 }
 
 
-bool FBullCowGame::CheckGuessValidity(std::string)
+bool FBullCowGame::CheckGuessValidity(FString)
 {
 	return false;
 }
