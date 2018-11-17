@@ -49,22 +49,25 @@ FBullCowCount FBullCowGame::SubmitGuess(FString UserGuess)
 	MyCurrentTry++;
 
 	//Setup a return variable
-
 	FBullCowCount BullCowCount;
 	
 	int32 HiddenWordLength = MyHiddenWord.length();
-
-
-	for (int32 i = 0; i < HiddenWordLength; i++)
+	for (int32 HiddenWordCharacter = 0; HiddenWordCharacter < HiddenWordLength; HiddenWordCharacter++)
 	{
-		if(UserGuess[i] == MyHiddenWord[i])
-		{		
-			BullCowCount.Bulls++;
-		}
-		else
+		for (int32 GuessCharacter = 0; GuessCharacter < HiddenWordLength; GuessCharacter++)
 		{
-			BullCowCount.Cows++;
-		}
+			if (UserGuess[GuessCharacter] == MyHiddenWord[HiddenWordCharacter])
+			{
+				if(HiddenWordCharacter == GuessCharacter)
+				{
+					BullCowCount.Bulls++;
+				}
+				else
+				{
+					BullCowCount.Cows++;
+				}
+			}
+		}		
 	}
 	return BullCowCount;
 }
