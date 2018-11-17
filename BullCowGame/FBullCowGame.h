@@ -17,10 +17,13 @@ public:
 
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
+	int32 GetHiddenWordLength() const;
+
 	bool IsGameWon() const;
+	bool CheckGuessValidity(FString) const;
 
 	void Reset();
-	bool CheckGuessValidity(FString);
+	
 	
 	// Provide a method for counting Bulls and Cows en incrementing try number.
 	FBullCowCount SubmitGuess(FString);
