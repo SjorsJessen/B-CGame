@@ -12,6 +12,7 @@ struct FBullCowCount
 
 enum class EGuessStatus //Strongly-typed enums (can use multiple enums with the same name. For example: "Ok")
 {
+	Invalid_Status,
 	OK,
 	Not_An_Isogram,
 	Wrong_Length,
