@@ -12,7 +12,7 @@ void FBullCowGame::Reset()
 {
 	constexpr int MAX_TRIES = 8;
 	constexpr int MY_CURRENT_TRY = 1;
-	const FString HIDDEN_WORD = "Planet";
+	const FString HIDDEN_WORD = "planet";
 
 	MyMaxTries = MAX_TRIES;	
 	MyCurrentTry = MY_CURRENT_TRY;	
@@ -40,10 +40,28 @@ bool FBullCowGame::IsGameWon() const
 	return false;
 }
 
-
-EWordStatus FBullCowGame::CheckGuessValidity(FString) const
+//Error checking code!
+EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
 {
-	return EWordStatus::OK; //TODO Make actual error
+	FBullCowCount BullCowCount;
+	
+	if(false)
+	{
+		return EGuessStatus::Not_An_Isogram;
+	}
+	else if (false)
+	{
+		return EGuessStatus::Not_Lowercase;
+	}
+	else if(UserGuess.length() != GetHiddenWordLength())
+	{
+		return EGuessStatus::Wrong_Length;
+	}
+	else
+	{
+		return EGuessStatus::OK; //TODO Make actual error	
+	}
+	
 }
 
 //Receives a VALID guess, increments turn, and returns count.

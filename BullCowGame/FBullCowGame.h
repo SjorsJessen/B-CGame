@@ -10,7 +10,7 @@ struct FBullCowCount
 	int32 Cows = 0;
 };
 
-enum class EWordStatus //Strongly-typed enums (can use multiple enums with the same name. For example: "Ok")
+enum class EGuessStatus //Strongly-typed enums (can use multiple enums with the same name. For example: "Ok")
 {
 	OK,
 	Not_An_Isogram,
@@ -29,7 +29,7 @@ public:
 	int32 GetHiddenWordLength() const;
 
 	bool IsGameWon() const;
-	EWordStatus CheckGuessValidity(FString) const;
+	EGuessStatus CheckGuessValidity(FString) const;
 
 	void Reset();
 	
