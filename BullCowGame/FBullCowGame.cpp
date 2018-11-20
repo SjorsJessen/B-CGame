@@ -11,11 +11,11 @@ FBullCowGame::FBullCowGame()
 
 void FBullCowGame::Reset()
 {
-	int32 MY_MAX_TRIES = 8;
-	int32 MY_CURRENT_TRY = 1;
+	const int32 my_max_tries = 8;
+	const int32 my_current_try = 1;
 
-	MyMaxTries = MY_MAX_TRIES;	
-	MyCurrentTry = MY_CURRENT_TRY;	
+	MyMaxTries = my_max_tries;	
+	MyCurrentTry = my_current_try;	
 	MyHiddenWord = "planet";
 	bWonGame = false;
 }
@@ -32,11 +32,12 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
 	
 	if(false)
 	{
-		return EGuessStatus::Not_An_Isogram;
+		return EGuessStatus::Not_An_Isogram; //TODO: Write function for analyzing if guess is an isogram
 	}
+	
 	else if (false)
 	{
-		return EGuessStatus::Not_Lowercase;
+		return EGuessStatus::Not_Lowercase; //TODO: Write function for analyzing is letters are lowercase
 	}
 	else if(UserGuess.length() != GetHiddenWordLength())
 	{
@@ -65,9 +66,7 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString UserGuess)
 			{
 				if(HiddenWordCharacter == GuessCharacter)
 				{
-					BullCowCount.Bulls++;
-
-					
+					BullCowCount.Bulls++;				
 				}
 				else
 				{
