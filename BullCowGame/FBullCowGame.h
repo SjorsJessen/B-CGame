@@ -33,15 +33,16 @@ public:
 	EGuessStatus CheckGuessValidity(FString) const;
 
 	void Reset();
-	
+
 	
 	// Provide a method for counting Bulls and Cows en incrementing try number.
-	FBullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitValidGuess(FString);
 
 private:
 	//See constructor for initialization.
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bWonGame;
 };
 

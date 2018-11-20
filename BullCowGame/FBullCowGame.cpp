@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "FBullCowGame.h"
+#include <iostream>
 
 using int32 = int;
 
@@ -10,35 +11,19 @@ FBullCowGame::FBullCowGame()
 
 void FBullCowGame::Reset()
 {
-	constexpr int MAX_TRIES = 8;
-	constexpr int MY_CURRENT_TRY = 1;
-	const FString HIDDEN_WORD = "planet";
+	int32 MY_MAX_TRIES = 8;
+	int32 MY_CURRENT_TRY = 1;
 
-	MyMaxTries = MAX_TRIES;	
+	MyMaxTries = MY_MAX_TRIES;	
 	MyCurrentTry = MY_CURRENT_TRY;	
-	MyHiddenWord = HIDDEN_WORD;
-	return;
+	MyHiddenWord = "planet";
+	bWonGame = false;
 }
 	
-int32 FBullCowGame::GetMaxTries() const
-{
-	return MyMaxTries;
-}
-
-int32 FBullCowGame::GetCurrentTry() const
-{
-	return MyCurrentTry;
-}
-
-int32 FBullCowGame::GetHiddenWordLength() const
-{
-	return MyHiddenWord.length();
-}
-
-bool FBullCowGame::IsGameWon() const
-{
-	return false;
-}
+int32 FBullCowGame::GetMaxTries() const{ return MyMaxTries; }
+int32 FBullCowGame::GetCurrentTry() const{ return MyCurrentTry; }
+int32 FBullCowGame::GetHiddenWordLength() const{ return MyHiddenWord.length(); }
+bool  FBullCowGame::IsGameWon() const{ return bWonGame; }
 
 //Error checking code!
 EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
@@ -65,24 +50,24 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
 }
 
 //Receives a VALID guess, increments turn, and returns count.
-FBullCowCount FBullCowGame::SubmitGuess(FString UserGuess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString UserGuess)
 {
-	//Increment the turn number
 	MyCurrentTry++;
-
-	//Setup a return variable
 	FBullCowCount BullCowCount;
-	
-	int32 HiddenWordLength = MyHiddenWord.length();
-	for (int32 HiddenWordCharacter = 0; HiddenWordCharacter < HiddenWordLength; HiddenWordCharacter++)
+	FBullCowGame BullCowGame;
+	int32 WordLength = MyHiddenWord.length();
+
+	for (int32 HiddenWordCharacter = 0; HiddenWordCharacter < WordLength; HiddenWordCharacter++)
 	{
-		for (int32 GuessCharacter = 0; GuessCharacter < HiddenWordLength; GuessCharacter++)
+		for (int32 GuessCharacter = 0; GuessCharacter < WordLength; GuessCharacter++)
 		{
 			if (UserGuess[GuessCharacter] == MyHiddenWord[HiddenWordCharacter])
 			{
 				if(HiddenWordCharacter == GuessCharacter)
 				{
 					BullCowCount.Bulls++;
+
+					
 				}
 				else
 				{
@@ -90,6 +75,14 @@ FBullCowCount FBullCowGame::SubmitGuess(FString UserGuess)
 				}
 			}
 		}		
+	}
+	if (BullCowCount.Bulls == WordLength)
+	{
+		bWonGame = true;
+	}
+	else
+	{
+		bWonGame = false;
 	}
 	return BullCowCount;
 }
