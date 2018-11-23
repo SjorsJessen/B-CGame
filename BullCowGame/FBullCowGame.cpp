@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FBullCowGame.h"
 #include <map>
+#include <iostream>
 #define TMap std::map
 
 using int32 = int;
@@ -26,17 +27,29 @@ int32 FBullCowGame::GetCurrentTry() const{ return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const{ return MyHiddenWord.length(); }
 
 bool  FBullCowGame::IsGameWon() const{ return bWonGame; }
-bool  FBullCowGame::IsIsogram(FString) const
+
+
+
+bool  FBullCowGame::IsIsogram(FString Word) const
 {
 	//treat 0 and 1 letters words as isograms
+	if (Word.length() <= 1) { return true; }
 
-	//Get input char and boolean to set up Tmap
-		//Loop through all the letters the word consists of (word length) and add them as a char to the Tmap
-			//Check all letters linear in alphabetic order and add +1 for each letter which is part of the word
-				//Check if there are duplicate letters. If so, add another +1 and return false when 2 (1+1)
-					//Word is not an Isogram, leave loop
-				//If no duplicates, return that the word is an isogram and thus is a valid guess.
-		
+	TMap<char, bool> LetterSeen;
+	
+	for (auto Letter : Word)
+	{
+		Letter = tolower(Letter);
+		//loop through all letters of the word
+		if(LetterSeen[Letter])
+		{
+			return false;
+		}
+		else
+		{
+			LetterSeen[Letter] = true;
+		}
+	}
 	return true; // for example in cases where /0 is entered as a guess
 }
 
