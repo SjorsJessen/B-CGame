@@ -30,7 +30,7 @@ bool  FBullCowGame::IsGameWon() const{ return bWonGame; }
 
 
 
-bool  FBullCowGame::IsIsogram(FString Word) const
+bool FBullCowGame::IsIsogram(FString Word) const
 {
 	//treat 0 and 1 letters words as isograms
 	if (Word.length() <= 1) { return true; }
@@ -50,7 +50,19 @@ bool  FBullCowGame::IsIsogram(FString Word) const
 			LetterSeen[Letter] = true;
 		}
 	}
-	return true; // for example in cases where /0 is entered as a guess
+	return true; // for example in cases where \0 is entered as a guess
+}
+
+bool FBullCowGame::IsLowercase(FString Word) const
+{
+	for (auto Letter : Word)
+	{
+		if (!islower(Letter))
+		{
+			return false;
+		}
+	}
+	return true; 
 }
 
 //Error checking code!
@@ -60,20 +72,15 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
 	{
 		return EGuessStatus::Not_An_Isogram;
 	}
-	
-	else if (false)
+	if (!IsLowercase(UserGuess))
 	{
-		return EGuessStatus::Not_Lowercase; //TODO: Write function for analyzing is letters are lowercase
+		return EGuessStatus::Not_Lowercase;
 	}
-	else if(UserGuess.length() != GetHiddenWordLength())
+	if(UserGuess.length() != GetHiddenWordLength())
 	{
 		return EGuessStatus::Wrong_Length;
 	}
-	else
-	{
-		return EGuessStatus::OK; //TODO Make actual error	
-	}
-	
+	return EGuessStatus::OK; 
 }
 
 //Receives a VALID guess, increments turn, and returns count.
