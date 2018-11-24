@@ -1,7 +1,9 @@
 #include "pch.h"
+#pragma once
+
 #include "FBullCowGame.h"
 #include <map>
-#include <iostream>
+
 #define TMap std::map
 
 using int32 = int;
@@ -16,11 +18,10 @@ void FBullCowGame::Reset()
 	const int32 my_current_try = 1;
 	MyCurrentTry = my_current_try;
 
-	MyHiddenWord = "planet";
+	MyHiddenWord = "planet"; //This must be an isogram!
 	bWonGame = false;
 }
 	
-
 int32 FBullCowGame::GetCurrentTry() const{ return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const{ return MyHiddenWord.length(); }
 int32 FBullCowGame::GetMaxTries() const
@@ -29,7 +30,7 @@ int32 FBullCowGame::GetMaxTries() const
 	return HiddenWordLengthToMaxTries[GetHiddenWordLength()];
 }
 
-bool  FBullCowGame::IsGameWon() const{ return bWonGame; }
+bool FBullCowGame::IsGameWon() const{ return bWonGame; }
 bool FBullCowGame::IsIsogram(FString Word) const
 {
 	//treat 0 and 1 letters words as isograms
@@ -45,17 +46,14 @@ bool FBullCowGame::IsIsogram(FString Word) const
 		{
 			return false;
 		}
-		else
-		{
-			LetterSeen[Letter] = true;
-		}
+		LetterSeen[Letter] = true;
 	}
 	return true; // for example in cases where \0 is entered as a guess
 }
 
-bool FBullCowGame::IsLowercase(FString Word) const
+bool FBullCowGame::IsLowercase(FString word) const
 {
-	for (auto Letter : Word)
+	for (auto Letter : word)
 	{
 		if (!islower(Letter))
 		{
@@ -66,17 +64,17 @@ bool FBullCowGame::IsLowercase(FString Word) const
 }
 
 //Error checking code!
-EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
+EGuessStatus FBullCowGame::CheckGuessValidity(FString user_guess) const
 {
-	if(!IsIsogram(UserGuess))
+	if(!IsIsogram(user_guess))
 	{
 		return EGuessStatus::Not_An_Isogram;
 	}
-	if (!IsLowercase(UserGuess))
+	if (!IsLowercase(user_guess))
 	{
 		return EGuessStatus::Not_Lowercase;
 	}
-	if(UserGuess.length() != GetHiddenWordLength())
+	if(user_guess.length() != GetHiddenWordLength())
 	{
 		return EGuessStatus::Wrong_Length;
 	}
@@ -84,17 +82,17 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString UserGuess) const
 }
 
 //Receives a VALID guess, increments turn, and returns count.
-FBullCowCount FBullCowGame::SubmitValidGuess(FString UserGuess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString user_guess)
 {
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;
-	int32 WordLength = MyHiddenWord.length();
+	const int32 word_length = MyHiddenWord.length();
 
-	for (int32 HiddenWordCharacter = 0; HiddenWordCharacter < WordLength; HiddenWordCharacter++)
+	for (int32 HiddenWordCharacter = 0; HiddenWordCharacter < word_length; HiddenWordCharacter++)
 	{
-		for (int32 GuessCharacter = 0; GuessCharacter < WordLength; GuessCharacter++)
+		for (int32 GuessCharacter = 0; GuessCharacter < word_length; GuessCharacter++)
 		{
-			if (UserGuess[GuessCharacter] == MyHiddenWord[HiddenWordCharacter])
+			if (user_guess[GuessCharacter] == MyHiddenWord[HiddenWordCharacter])
 			{
 				if(HiddenWordCharacter == GuessCharacter)
 				{
@@ -107,7 +105,7 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString UserGuess)
 			}
 		}		
 	}
-	if (BullCowCount.Bulls == WordLength)
+	if (BullCowCount.Bulls == word_length)
 	{
 		bWonGame = true;
 	}
