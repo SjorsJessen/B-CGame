@@ -6,30 +6,30 @@
 
 using int32 = int;
 
-FBullCowGame::FBullCowGame()
+FBullCowGame::FBullCowGame() //Default constructor 
 {
 	Reset();
 }
 
 void FBullCowGame::Reset()
 {
-	const int32 my_max_tries = 8;
 	const int32 my_current_try = 1;
+	MyCurrentTry = my_current_try;
 
-	MyMaxTries = my_max_tries;	
-	MyCurrentTry = my_current_try;	
 	MyHiddenWord = "planet";
 	bWonGame = false;
 }
 	
-int32 FBullCowGame::GetMaxTries() const{ return MyMaxTries; }
+
 int32 FBullCowGame::GetCurrentTry() const{ return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const{ return MyHiddenWord.length(); }
+int32 FBullCowGame::GetMaxTries() const
+{
+	TMap<int32, int32> HiddenWordLengthToMaxTries{{3,5}, {4,6}, {5,8}, {6,10}, {7,15}, {8,20}};
+	return HiddenWordLengthToMaxTries[GetHiddenWordLength()];
+}
 
 bool  FBullCowGame::IsGameWon() const{ return bWonGame; }
-
-
-
 bool FBullCowGame::IsIsogram(FString Word) const
 {
 	//treat 0 and 1 letters words as isograms
